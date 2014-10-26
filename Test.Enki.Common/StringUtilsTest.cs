@@ -47,6 +47,8 @@ namespace Test.Enki.Common {
 			Assert.AreEqual("1.764,30", StringUtils.format(StringUtils.CurrencyFrom("1,764.30").ToString("0.00"), "###.###.###,##"));
 			Assert.AreEqual("1.402,95", StringUtils.format(StringUtils.CurrencyFrom("1,402.95").ToString(), "###.###.###,##"));
 			Assert.AreEqual("85,13", StringUtils.format(StringUtils.CurrencyFrom("R$ 85.13").ToString(), "###.###.###,##"));
+			// Efeito de Teste!!!
+			Assert.AreEqual("85,13", StringUtils.format(StringUtils.CurrencyFrom("R$ 85.13").ToString(), "###.###.###,##"));
 		}
 	}
 }
