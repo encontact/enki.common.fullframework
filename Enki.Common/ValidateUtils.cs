@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Enki.Common.RegionalUtils;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -16,39 +17,9 @@ namespace Enki.Common {
 		/// </summary>
 		/// <param name="cpf"></param>
 		/// <returns></returns>
+		[Obsolete("Será descontinuado por ser específico. Utilizar BrazilianUtils.ValidCpf")]
 		public static bool ValidaCpf(String cpf) {
-			try {
-				//Remove tudo o que não é digito;
-				cpf = cpf.Replace(".", "").Replace("-", "").Replace("/", "").Replace("\\", "");
-				if (cpf.Length != 11 || cpf == "00000000000" || cpf == "11111111111" || cpf == "22222222222" || cpf == "33333333333" || cpf == "44444444444" || cpf == "55555555555" || cpf == "66666666666" || cpf == "77777777777" || cpf == "88888888888" || cpf == "99999999999") {
-					return false;
-				}
-				// Se não for numérico o valor resultante então não é um CNPJ
-				Int64 outInteger = 0;
-				if (!Int64.TryParse(cpf, out outInteger)) return false;
-
-				int add = 0;
-				for (int i = 0; i < 9; i++)
-					add += Int32.Parse(cpf[i].ToString()) * (10 - i);
-
-				int rev = 11 - (add % 11);
-				if (rev == 10 || rev == 11)
-					rev = 0;
-				if (rev != Int32.Parse(cpf[9].ToString()))
-					return false;
-				add = 0;
-				for (int i = 0; i < 10; i++)
-					add += Int32.Parse(cpf[i].ToString()) * (11 - i);
-				rev = 11 - (add % 11);
-				if (rev == 10 || rev == 11)
-					rev = 0;
-				if (rev != Int32.Parse(cpf[10].ToString()))
-					return false;
-
-				return true;
-			} catch {
-				return false;
-			}
+			return BrazilianUtils.ValidCpf(cpf);
 		}
 		/// <summary>
 		/// Verifica se um  e-mail tem a estrutura valida.
@@ -71,52 +42,9 @@ namespace Enki.Common {
 		/// </summary>
 		/// <param name="cnpj">String do CNPJ</param>
 		/// <returns></returns>
+		[Obsolete("Será descontinuado por ser específico. Utilizar BrazilianUtils.ValidCnpj")]
 		public static bool ValidaCnpj(string cnpj) {
-			int[] multiplicador1 = new int[12] { 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
-			int[] multiplicador2 = new int[13] { 6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
-
-			int soma;
-			int resto;
-			string digito;
-			string tempCnpj;
-
-			cnpj = cnpj.Trim();
-			cnpj = cnpj.Replace(".", "").Replace("-", "").Replace("/", "");
-			// Se não for numérico o valor resultante então não é um CNPJ
-			Int64 outInteger = 0;
-			if (!Int64.TryParse(cnpj, out outInteger)) return false;
-
-			if (cnpj.Length != 14)
-				return false;
-
-			tempCnpj = cnpj.Substring(0, 12);
-			soma = 0;
-
-			for (int i = 0; i < 12; i++)
-				soma += int.Parse(tempCnpj[i].ToString()) * multiplicador1[i];
-
-			resto = (soma % 11);
-			if (resto < 2)
-				resto = 0;
-			else
-				resto = 11 - resto;
-
-			digito = resto.ToString();
-			tempCnpj = tempCnpj + digito;
-			soma = 0;
-
-			for (int i = 0; i < 13; i++)
-				soma += int.Parse(tempCnpj[i].ToString()) * multiplicador2[i];
-
-			resto = (soma % 11);
-			if (resto < 2)
-				resto = 0;
-			else
-				resto = 11 - resto;
-
-			digito = digito + resto.ToString();
-
-			return cnpj.EndsWith(digito);
+			return BrazilianUtils.ValidCnpj(cnpj);
 		}
 		/// <summary>
 		/// Verifica se o texto informado é formado apenas por números inteiros.

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Enki.Common.RegionalUtils;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -12,39 +13,27 @@ namespace Enki.Common {
 		/// </summary>
 		/// <param name="cnpj"></param>
 		/// <returns></returns>
+		[Obsolete("Será descontinuado por ser específico. Utilizar BrazilianUtilities.FormatCnpj")]
 		public static string formatCnpj(string cnpj) {
-			if (cnpj != null && cnpj != "") {
-				cnpj = cnpj.Replace("-", "").Replace("/", "").Replace(".", "");
-				return format(cnpj, "##.###.###/####-##");
-			} else {
-				return "";
-			}
+			return BrazilianUtils.FormatCnpj(cnpj);
 		}
 		/// <summary>
 		/// Formata uma string para estrutura de CPF
 		/// </summary>
 		/// <param name="cpf"></param>
 		/// <returns></returns>
+		[Obsolete("Será descontinuado por ser específico. Utilizar BrazilianUtilities.FormatCpf")]
 		public static string formatCpf(string cpf) {
-			if (cpf != null && cpf != "") {
-				cpf = cpf.Replace("-", "").Replace("/", "").Replace(".", "");
-				return format(cpf, "###.###.###-##");
-			} else {
-				return "";
-			}
+			return BrazilianUtils.FormatCpf(cpf);
 		}
 		/// <summary>
 		/// Formata uma string para estrutura de CEP
 		/// </summary>
 		/// <param name="cpf"></param>
 		/// <returns></returns>
+		[Obsolete("Será descontinuado por ser específico. Utilizar BrazilianUtilities.FormatCep")]
 		public static string formatCep(string cep) {
-			if (cep != null && cep != "") {
-				cep = cep.Replace("-", "");
-				return format(cep, "#####-###");
-			} else {
-				return "";
-			}
+			return BrazilianUtils.FormatCep(cep);
 		}
 		/// <summary>
 		/// Formata Strings de acordo com o informado. Ex: ##/##/#### ou ##.###,##
