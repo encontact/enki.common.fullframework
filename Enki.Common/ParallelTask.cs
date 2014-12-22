@@ -6,50 +6,62 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace Enki.Common {
+	/// <summary>
+	/// Cria Threads paralelas para execução de uma lista de processos de forma sincrona.
+	/// </summary>
+	/// <typeparam name="T">Tipo do objeto da lista.</typeparam>
 	public class ParallelTask<T> where T : class {
-		private Action<T> _taskWork { get; set; }
-		private ThreadSafeQueue<T> _queue { get; set; }
-		private List<Thread> _threads { get; set; }
+		private ParallelOptions _options { get; set; }
+		private CancellationTokenSource _cancelation { get; set; } 
+		private ParallelLoopResult _parallelTasks { get; set; }
+		private IEnumerable<T> _itemList { get; set; }
+		private Action<T> _taskAction { get; set; }
+		private Action _onCompleteAction { get; set; }
 
-		public ParallelTask(IEnumerable<T> list, Action<T> taskWork, int simultaneousTasks) {
-			_taskWork = taskWork;
-
-			_queue = new ThreadSafeQueue<T>();
-			foreach (var item in list) _queue.QueueOrDequeue(item);
-			_threads = new List<Thread>();
-			for (var i = 0; i < simultaneousTasks; i++) {
-				var t = new Thread(Work);
-				t.IsBackground = true;
-				_threads.Add(t);
-			}
-		}
-
-		private void Work() {
-			T workItem = null;
-			while ((workItem = _queue.QueueOrDequeue(null)) != null) {
-				_taskWork(workItem);
-			}
+		public ParallelTask(IEnumerable<T> list, Action<T> taskAction, int simultaneousTasks, Action onCompleteAction = null) {
+			_cancelation = new CancellationTokenSource();
+			_options = new System.Threading.Tasks.ParallelOptions();
+			_options.MaxDegreeOfParallelism = simultaneousTasks; // -1 is for unlimited. 1 is for sequential.
+			_options.CancellationToken = _cancelation.Token;
+			_itemList = list;
+			_taskAction = taskAction;
+			_onCompleteAction = onCompleteAction;
 		}
 
 		public void Start() {
-			foreach (var t in _threads) {
-				t.Start();
+			try {
+				_parallelTasks = System.Threading.Tasks.Parallel.ForEach(_itemList, _options, item => {
+					_taskAction(item);
+					_options.CancellationToken.ThrowIfCancellationRequested();
+				});
+			} catch (OperationCanceledException) {
+				// VER O QUE FAZER SE FOR CANCELADO.
 			}
 		}
 
 		public void Wait() {
-			foreach (var t in _threads) {
-				t.Join();
+			while(!_parallelTasks.IsCompleted) {
+				Thread.Sleep(500);
 			}
+			if (_onCompleteAction != null) _onCompleteAction();
 		}
 
+		public void Cancel() {
+			_cancelation.Cancel(true);
+		}
+
+		[Obsolete("Alterar chamada para o método Run(), este método será descontinuado.")]
 		public void Complete() {
+			Run();
+		}
+
+		public void Run() {
 			Start();
 			Wait();
 		}
 
-		public static ParallelTask<T> CreateTask(IEnumerable<T> list, Action<T> taskWork, int simultaneousTasks = 5) {
-			return new ParallelTask<T>(list, taskWork, simultaneousTasks);
+		public static ParallelTask<T> CreateTask(IEnumerable<T> list, Action<T> taskWork, int simultaneousTasks = 5, Action onCompleteAction = null) {
+			return new ParallelTask<T>(list, taskWork, simultaneousTasks, onCompleteAction);
 		}
 	}
 }

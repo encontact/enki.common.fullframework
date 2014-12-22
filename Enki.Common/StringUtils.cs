@@ -161,8 +161,14 @@ namespace Enki.Common {
 		/// A partir de um texto representando um valor monetário, exemplo 99.655,00 ou 99,655.00 ou 99.5, recupera o Double equivalente.
 		/// </summary>
 		/// <param name="text">Texto representando o valor monetário que se quer transformar</param>
+		/// <param name="DecimalSeparator">Separador de casa decimal a ser utilizada.</param>
+		/// <param name="GroupSeparator">Separador de grupo numério.</param>
 		/// <returns>Double equivalente ao valor do texto.</returns>
-		public static double CurrencyFrom(string text) {
+		public static double CurrencyFrom(string text, string DecimalSeparator = ",", string GroupSeparator = ".") {
+			var numberFormat = new NumberFormatInfo();
+			numberFormat.NumberDecimalSeparator = DecimalSeparator;
+			numberFormat.NumberGroupSeparator = GroupSeparator;
+
             var originalText = text;
 			text = "000" + text.Replace("R$", "").Trim();
 			// Processa logica de conversão
@@ -192,7 +198,7 @@ namespace Enki.Common {
             if (!Double.TryParse(finalText, out result)) {
                 throw new System.InvalidOperationException("O valor "+ originalText + " não pode ser convertido para double.");
             }
-			return Convert.ToDouble(finalText);
+			return Convert.ToDouble(finalText, numberFormat);
 		}
 	}
 }

@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="DateUtilsTest.cs" />
     <Compile Include="RegionalUtils\BrazilianUtilsTest.cs" />
+    <Compile Include="ParallelTaskTest.cs" />
     <Compile Include="StringUtilsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
