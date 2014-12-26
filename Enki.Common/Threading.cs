@@ -8,7 +8,7 @@ namespace Enki.Common {
 	/// <summary>
 	/// Classe responsável por criar formas de facilitar o uso de chamadas assincronas no sistema.
 	/// </summary>
-	[Obsolete("Utilizar nova estrutura de Threads: ParallelTask, ThreadSafeQueue")]
+	[Obsolete("Utilizar nova estrutura de Threads: ParallelTask, ThreadSafeQueue, SingleThread")]
 	public static class Threading {
 		/// <summary>
 		/// Executa uma chamada dinâmica de forma assincrora.
