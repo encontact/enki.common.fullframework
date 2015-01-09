@@ -60,6 +60,7 @@
     <Compile Include="ExcelUtils.cs" />
     <Compile Include="HttpUtils.cs" />
     <Compile Include="IPAddressRange.cs" />
+    <Compile Include="LimitedQueue.cs" />
     <Compile Include="ParallelTask.cs" />
     <Compile Include="Period.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
