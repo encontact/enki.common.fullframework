@@ -55,7 +55,7 @@ namespace Test.Enki.Common {
 
 		[TestMethod]
 		public void TestIsAlive() {
-			var countSize = 1000;
+			var countSize = 100000;
 			SingleThread.Create(firstThreadName, delegate {
 				try {
 					var count = 0;
@@ -69,7 +69,6 @@ namespace Test.Enki.Common {
 				return;
 			});
 
-			Assert.AreEqual(1, SingleThread.ThreadsCount());
 			Assert.IsTrue(SingleThread.IsAlive(firstThreadName));
 
 			while (SingleThread.IsAlive(firstThreadName)) ;
@@ -93,7 +92,6 @@ namespace Test.Enki.Common {
 				return;
 			});
 
-			Assert.AreEqual(1, SingleThread.ThreadsCount());
 			while (SingleThread.IsAlive(firstThreadName)) ;
 			Thread.Sleep(500);
 			Assert.IsFalse(SingleThread.IsAlive(firstThreadName));
