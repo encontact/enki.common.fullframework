@@ -55,13 +55,9 @@ namespace Test.Enki.Common {
 
 		[TestMethod]
 		public void TestIsAlive() {
-			var countSize = 100000;
 			SingleThread.Create(firstThreadName, delegate {
 				try {
-					var count = 0;
-					while (count < countSize) {
-						count++;
-					}
+					Thread.Sleep(1500);
 					Console.WriteLine("Internal code finished.");
 				} catch (Exception e) {
 					Console.WriteLine("Teste de SingleThread TestStop parou na Exception.", e);
@@ -78,13 +74,9 @@ namespace Test.Enki.Common {
 
 		[TestMethod]
 		public void TestThreadFinalize() {
-			var countSize = 1000;
 			SingleThread.Create(firstThreadName, delegate {
 				try {
-					var count = 0;
-					while (count < countSize) {
-						count++;
-					}
+					Thread.Sleep(1500);
 					Console.WriteLine("Internal code finished.");
 				} catch (Exception e) {
 					Console.WriteLine("Teste de SingleThread TestStop parou na Exception.", e);
