@@ -196,70 +196,69 @@ namespace Test.Enki.Common {
 			task.Run();
 		}
 
-		//[TestMethod]
-		//public void TestCancelTask() {
-		//	List<bool> resultItens = new List<bool>();
-		//	var SumList = new List<Tuple<int, int, int>>() {
-		//		new Tuple<int, int, int>(1,2,3),
-		//		new Tuple<int, int, int>(5,2,7),
-		//		new Tuple<int, int, int>(6,5,11),
-		//		new Tuple<int, int, int>(2,2,4),
-		//		new Tuple<int, int, int>(1,1,2),
-		//		new Tuple<int, int, int>(5,5,10),
-		//		new Tuple<int, int, int>(10,12,22),
-		//		new Tuple<int, int, int>(5,4,9),
-		//		new Tuple<int, int, int>(3,2,5),
-		//		new Tuple<int, int, int>(12,12,24)
-		//	};
-		//	var ItensPerTask = 1;
+		[TestMethod]
+		public void TestCancelTask() {
+			List<bool> resultItens = new List<bool>();
+			var SumList = new List<Tuple<int, int, int>>() {
+				new Tuple<int, int, int>(1,2,3),
+				new Tuple<int, int, int>(5,2,7),
+				new Tuple<int, int, int>(6,5,11),
+				new Tuple<int, int, int>(2,2,4),
+				new Tuple<int, int, int>(1,1,2),
+				new Tuple<int, int, int>(5,5,10),
+				new Tuple<int, int, int>(10,12,22),
+				new Tuple<int, int, int>(5,4,9),
+				new Tuple<int, int, int>(3,2,5),
+				new Tuple<int, int, int>(12,12,24)
+			};
+			var ItensPerTask = 1;
 
-		//	var ResultStringList = new List<string>() {
-		//		"1+2=3 -> Iniciado",
-		//		"1+2=3 -> Concluido",
-		//		"5+2=7 -> Iniciado",
-		//		"5+2=7 -> Concluido",
-		//		"6+5=11 -> Iniciado",
-		//		"6+5=11 -> Concluido",
-		//		"2+2=4 -> Iniciado",
-		//		"2+2=4 -> Concluido",
-		//		"1+1=2 -> Iniciado",
-		//		"1+1=2 -> Concluido",
-		//		"5+5=10 -> Iniciado",
-		//		"5+5=10 -> Concluido",
-		//		"10+12=22 -> Iniciado",
-		//		"10+12=22 -> Concluido",
-		//		"5+4=9 -> Iniciado",
-		//		"5+4=9 -> Concluido",
-		//		"3+2=5 -> Iniciado",
-		//		"3+2=5 -> Concluido",
-		//		"12+12=24 -> Iniciado",
-		//		"12+12=24 -> Concluido"
-		//	};
-		//	var ResultToCompareList = new List<string>();
+			var ResultStringList = new List<string>() {
+				"1+2=3 -> Iniciado",
+				"1+2=3 -> Concluido",
+				"5+2=7 -> Iniciado",
+				"5+2=7 -> Concluido",
+				"6+5=11 -> Iniciado",
+				"6+5=11 -> Concluido",
+				"2+2=4 -> Iniciado",
+				"2+2=4 -> Concluido",
+				"1+1=2 -> Iniciado",
+				"1+1=2 -> Concluido",
+				"5+5=10 -> Iniciado",
+				"5+5=10 -> Concluido",
+				"10+12=22 -> Iniciado",
+				"10+12=22 -> Concluido",
+				"5+4=9 -> Iniciado",
+				"5+4=9 -> Concluido",
+				"3+2=5 -> Iniciado",
+				"3+2=5 -> Concluido",
+				"12+12=24 -> Iniciado",
+				"12+12=24 -> Concluido"
+			};
+			var ResultToCompareList = new List<string>();
 
-		//	var task = ParallelTask<Tuple<int, int, int>>.CreateTask(
-		//		SumList,
-		//		item => {
-		//			ResultToCompareList.Add(item.Item1 + "+" + item.Item2 + "=" + item.Item3 + " -> Iniciado");
-		//			for (int i = 0; i < 100000; i++) {
-		//				var x = item.Item1 + item.Item2;
-		//				if (x == item.Item3) {
-		//					Console.WriteLine("Calculo " + item.Item1 + "+" + item.Item2 + "=" + item.Item3 + " -> OK");
-		//				}
-		//			}
-		//			ResultToCompareList.Add(item.Item1 + "+" + item.Item2 + "=" + item.Item3 + " -> Concluido");
-		//		},
-		//		ItensPerTask,
-		//		() => {
-		//			var x = "";
-		//			for (int i = 0; i < ResultStringList.Count; i++) {
-		//				Assert.AreEqual(ResultStringList[i], ResultToCompareList[i]);
-		//			}
-		//		}
-		//	);
-		//	task.Start();
-		//	task.Cancel();
-		//}
+			var task = ParallelTask<Tuple<int, int, int>>.CreateTask(
+				SumList,
+				item => {
+					ResultToCompareList.Add(item.Item1 + "+" + item.Item2 + "=" + item.Item3 + " -> Iniciado");
+					for (int i = 0; i < 100000; i++) {
+						var x = item.Item1 + item.Item2;
+						if (x == item.Item3) {
+							Console.WriteLine("Calculo " + item.Item1 + "+" + item.Item2 + "=" + item.Item3 + " -> OK");
+						}
+					}
+					ResultToCompareList.Add(item.Item1 + "+" + item.Item2 + "=" + item.Item3 + " -> Concluido");
+				},
+				ItensPerTask,
+				() => {
+					for (int i = 0; i < ResultStringList.Count; i++) {
+						Assert.AreEqual(ResultStringList[i], ResultToCompareList[i]);
+					}
+				}
+			);
+			task.Start();
+			task.Cancel();
+		}
 
 	}
 }

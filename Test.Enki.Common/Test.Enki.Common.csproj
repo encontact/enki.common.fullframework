@@ -51,6 +51,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="DateUtilsTest.cs" />
+    <Compile Include="SingleThreadTest.cs" />
     <Compile Include="RegionalUtils\BrazilianUtilsTest.cs" />
     <Compile Include="ParallelTaskTest.cs" />
     <Compile Include="StringUtilsTest.cs" />
