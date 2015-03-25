@@ -6,7 +6,7 @@ using System.Web.Hosting;
 namespace Enki.Common {
 
 	public static class SingleThread {
-		private static Dictionary<string, Thread> _threads = new Dictionary<string, Thread>();
+		private static List<Tuple<string, Thread, DateTime>> _nameThreadStartDate = new List<Tuple<string, Thread, DateTime>>();
 
 		/// <summary>
 		/// Efetua a criação de uma Thread única.
@@ -16,11 +16,11 @@ namespace Enki.Common {
 		/// <returns>Thread criada</returns>
 		public static Thread Create(string functionName, ThreadStart work) {
 			Thread ret = null;
-			lock (_threads) {
-				if (_threads.ContainsKey(functionName)) return null;
+			lock (_nameThreadStartDate) {
+				if (Exists(functionName)) return null;
 				ret = CreateThread(functionName, work);
 				ret.Name = functionName;
-				_threads.Add(functionName, ret);
+				_nameThreadStartDate.Add(new Tuple<string, Thread, DateTime>(functionName, ret, DateTime.Now));
 			}
 			if (ret != null) ret.Start();
 			return ret;
@@ -32,8 +32,13 @@ namespace Enki.Common {
 		/// <param name="functionName">Nome da thread a ser recuperada.</param>
 		/// <returns></returns>
 		public static Thread Get(string functionName) {
-			if (!_threads.ContainsKey(functionName)) return null;
-			return _threads[functionName];
+			try {
+				if (!Exists(functionName)) return null;
+				var tuple = _nameThreadStartDate.Find(n => n.Item1 == functionName);
+				return tuple.Item2;
+			} catch {
+				return null;
+			}
 		}
 
 		/// <summary>
@@ -41,7 +46,7 @@ namespace Enki.Common {
 		/// </summary>
 		/// <returns>Lista encontrada.</returns>
 		public static List<string> GetNames() {
-			return new List<string>(_threads.Keys);
+			return new List<string>(_nameThreadStartDate.ConvertAll(m => m.Item1));
 		}
 
 		/// <summary>
@@ -49,7 +54,7 @@ namespace Enki.Common {
 		/// </summary>
 		/// <returns>Quantidade de threads registradas</returns>
 		public static int ThreadsCount() {
-			return _threads.Count;
+			return _nameThreadStartDate.Count;
 		}
 
 		/// <summary>
@@ -58,10 +63,10 @@ namespace Enki.Common {
 		/// </summary>
 		/// <param name="functionName">Nome da thread única na fila.</param>
 		public static void ForceStop(string functionName) {
-			lock (_threads) {
-				if (!_threads.ContainsKey(functionName)) return;
-				var thisThread = _threads[functionName];
-				_threads.Remove(functionName);
+			lock (_nameThreadStartDate) {
+				if (!Exists(functionName)) return;
+				var thisThread = Get(functionName);
+				RemoveItem(functionName);
 				thisThread.Abort();
 			}
 		}
@@ -72,25 +77,40 @@ namespace Enki.Common {
 		/// </summary>
 		/// <param name="functionName">Nome da thread única na fila.</param>
 		public static void Stop(string functionName) {
-			lock (_threads) {
-				if (!_threads.ContainsKey(functionName)) return;
-				var thisThread = _threads[functionName];
-				_threads.Remove(functionName);
+			lock (_nameThreadStartDate) {
+				if (!Exists(functionName)) return;
+				var thisThread = Get(functionName);
+				RemoveItem(functionName);
 				thisThread.Interrupt();
 			}
 		}
 
 		/// <summary>
-		/// Retorna a situação ataul da thread
+		/// Retorna a situação atual da thread
 		/// </summary>
 		/// <param name="functionName">Nome da thread a ser verificada.</param>
 		/// <returns>True se está ativa e false se não está</returns>
 		public static bool IsAlive(string functionName) {
 			try {
-				if (!_threads.ContainsKey(functionName)) return false;
-				return _threads[functionName].IsAlive;
+				if (!Exists(functionName)) return false;
+				return Get(functionName).IsAlive;
 			} catch {
 				return false;
+			}
+		}
+
+		/// <summary>
+		/// Recupera a data e hora em que foi iniciada a Thread
+		/// </summary>
+		/// <param name="functionName">Nome da thread a ser verificada.</param>
+		/// <returns>Data ou null se não encontrar</returns>
+		public static DateTime? GetStartDate(string functionName) {
+			try {
+				if (!Exists(functionName)) return null;
+				var tuple = _nameThreadStartDate.Find(m => m.Item1 == functionName);
+				return tuple.Item3;
+			} catch {
+				return null;
 			}
 		}
 
@@ -107,12 +127,29 @@ namespace Enki.Common {
 					job.DoWork(() => work());
 				} finally {
 					job.Stop(true);
-					_threads.Remove(functionName);
+					RemoveItem(functionName);
 				}
 				return;
 			});
 			ret.IsBackground = false;
 			return ret;
+		}
+
+		/// <summary>
+		/// Verifica se um item existe na listagem.
+		/// </summary>
+		/// <param name="functionName"></param>
+		/// <returns></returns>
+		private static bool Exists(string functionName) {
+			return _nameThreadStartDate.Exists(n => n.Item1 == functionName);
+		}
+
+		/// <summary>
+		/// Remove o item com o nome informado da listagem
+		/// </summary>
+		/// <param name="functionName"></param>
+		private static void RemoveItem(string functionName) {
+			_nameThreadStartDate.RemoveAll(n => n.Item1 == functionName);
 		}
 	}
 

@@ -37,8 +37,7 @@ namespace Test.Enki.Common {
 
 		[TestMethod]
 		public void TestForceStop() {
-			var threadName = "Eternal";
-			SingleThread.Create(threadName, delegate {
+			SingleThread.Create(firstThreadName, delegate {
 				try {
 					while (true) ;
 				} catch (Exception e) {
@@ -48,7 +47,7 @@ namespace Test.Enki.Common {
 			});
 
 			Assert.AreEqual(1, SingleThread.ThreadsCount());
-			SingleThread.ForceStop(threadName);
+			SingleThread.ForceStop(firstThreadName);
 			Thread.Sleep(100);
 			Assert.AreEqual(0, SingleThread.ThreadsCount());
 		}
@@ -88,6 +87,23 @@ namespace Test.Enki.Common {
 			Thread.Sleep(500);
 			Assert.IsFalse(SingleThread.IsAlive(firstThreadName));
 			Assert.IsNull(SingleThread.Get(firstThreadName));			
+		}
+
+		[TestMethod]
+		public void TestThreadGetThreadStartDate() {
+			SingleThread.Create(firstThreadName, delegate {
+				try {
+					while (true) ;
+				} catch (Exception e) {
+					Console.WriteLine("Teste de SingleThread TestStop parou na Exception.", e);
+				}
+				return;
+			});
+
+			Thread.Sleep(2000);
+			Assert.IsNotNull(SingleThread.GetStartDate(firstThreadName));
+			Assert.IsTrue(SingleThread.GetStartDate(firstThreadName).Value.CompareTo(DateTime.Now.AddSeconds(-5)) > 0);
+			SingleThread.ForceStop(firstThreadName);
 		}
 	}
 }
