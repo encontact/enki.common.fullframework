@@ -28,14 +28,9 @@ namespace Enki.Common {
 		/// <returns></returns>
 		public static bool ValidaEmail(string inputEmail) {
 			inputEmail = inputEmail == null ? "" : inputEmail;
-			string strRegex = @"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}" +
-				  @"\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\" +
-				  @".)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$";
-			Regex re = new Regex(strRegex);
-			if (re.IsMatch(inputEmail))
-				return (true);
-			else
-				return (false);
+			string strRegex = @"^[\w\+\=\-\.]+@[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}(?:.[a-zA-Z0-9]{2})?$|^[^<>]*?<\s*[\w-\.]+@[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}(?:.[a-zA-Z0-9]{2})?\s*>$";
+			var re = new Regex(strRegex, RegexOptions.IgnoreCase);
+			return re.IsMatch(inputEmail);
 		}
 		/// <summary>
 		/// Efetua a verificação da estrutura de um CNPJ
