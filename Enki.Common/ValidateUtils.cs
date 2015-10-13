@@ -1,24 +1,20 @@
 ﻿using Enki.Common.RegionalUtils;
 using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Enki.Common {
-	/// <summary>
-	/// Classe de validações da Enki Consultoria e Desenvolvimento.
-	/// <link>www.enkiconsultoria.com.br</link>
-	/// </summary>
-	public static class ValidateUtils {
+    /// <summary>
+    /// Classe de validações da Enki Consultoria e Desenvolvimento.
+    /// <link>www.enkiconsultoria.com.br</link>
+    /// </summary>
+    public static class ValidateUtils {
 		/// <summary>
 		/// Efetua a validação do CPF informado.
 		/// </summary>
 		/// <param name="cpf"></param>
 		/// <returns></returns>
 		[Obsolete("Será descontinuado por ser específico. Utilizar BrazilianUtils.ValidCpf")]
-		public static bool ValidaCpf(String cpf) {
+		public static bool ValidaCpf(string cpf) {
 			return BrazilianUtils.ValidCpf(cpf);
 		}
 		/// <summary>
@@ -28,7 +24,7 @@ namespace Enki.Common {
 		/// <returns></returns>
 		public static bool ValidaEmail(string inputEmail) {
 			inputEmail = inputEmail == null ? "" : inputEmail;
-			string strRegex = @"^[\w\+\=\-\.]+@[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}(?:.[a-zA-Z0-9]{2})?$|^[^<>]*?<\s*[\w-\.]+@[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}(?:.[a-zA-Z0-9]{2})?\s*>$";
+			string strRegex = @"^[\w\+\=\-\.]+@[a-zA-Z0-9]{2,}(\.{1}[a-zA-Z0-9]{2,})+?$|^[^<>]*?<\s*[\w\+\=\-\.]+@[a-zA-Z0-9]{2,}(\.{1}[a-zA-Z0-9]{2,})+?\s*>$";
 			var re = new Regex(strRegex, RegexOptions.IgnoreCase);
 			return re.IsMatch(inputEmail);
 		}

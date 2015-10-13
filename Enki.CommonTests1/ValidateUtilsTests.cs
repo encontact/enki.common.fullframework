@@ -20,6 +20,7 @@ namespace Enki.Common.Tests {
             Assert.IsTrue(ValidateUtils.ValidaEmail("nomecomprido Coelho Sartorelli <   nomecomprido@enkilabs.com.br >"));
             Assert.IsTrue(ValidateUtils.ValidaEmail("nomecomprido@enkilabs.software"));
             Assert.IsTrue(ValidateUtils.ValidaEmail("nomecomprido@123enkilabs.software"));
+            Assert.IsTrue(ValidateUtils.ValidaEmail("nomecomprido@gov.br"));
 
             // Validações falsas.
             Assert.IsFalse(ValidateUtils.ValidaEmail("nomecomprido@"));
@@ -31,6 +32,8 @@ namespace Enki.Common.Tests {
             Assert.IsFalse(ValidateUtils.ValidaEmail("roy"));
             Assert.IsFalse(ValidateUtils.ValidaEmail("nomecomprido@_enkilabs.software"));
             Assert.IsFalse(ValidateUtils.ValidaEmail("scan11@.com.br"));
+            Assert.IsFalse(ValidateUtils.ValidaEmail("scan11@com..br"));
+            Assert.IsFalse(ValidateUtils.ValidaEmail("scan11@com.br."));
 
         }
     }
