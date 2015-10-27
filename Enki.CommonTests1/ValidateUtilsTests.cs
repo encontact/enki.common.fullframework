@@ -21,6 +21,10 @@ namespace Enki.Common.Tests {
             Assert.IsTrue(ValidateUtils.ValidaEmail("nomecomprido@enkilabs.software"));
             Assert.IsTrue(ValidateUtils.ValidaEmail("nomecomprido@123enkilabs.software"));
             Assert.IsTrue(ValidateUtils.ValidaEmail("nomecomprido@gov.br"));
+            Assert.IsTrue(ValidateUtils.ValidaEmail("nome.sobrenome@br.ey.com"));
+            Assert.IsTrue(ValidateUtils.ValidaEmail("livia.pereira@am.sebrae.com.br"));
+            Assert.IsTrue(ValidateUtils.ValidaEmail("teste.email@meu-dominio.com.br"));
+            Assert.IsTrue(ValidateUtils.ValidaEmail("teste.email@meu-dominio-dois.com.br"));
 
             // Validações falsas.
             Assert.IsFalse(ValidateUtils.ValidaEmail("nomecomprido@"));
@@ -31,6 +35,8 @@ namespace Enki.Common.Tests {
             Assert.IsFalse(ValidateUtils.ValidaEmail("@neomerkato.com.br"));
             Assert.IsFalse(ValidateUtils.ValidaEmail("roy"));
             Assert.IsFalse(ValidateUtils.ValidaEmail("nomecomprido@_enkilabs.software"));
+            Assert.IsFalse(ValidateUtils.ValidaEmail("nomecomprido@-enkilabs.software"));
+            Assert.IsFalse(ValidateUtils.ValidaEmail("nomecomprido@enkilabs-.software"));
             Assert.IsFalse(ValidateUtils.ValidaEmail("scan11@.com.br"));
             Assert.IsFalse(ValidateUtils.ValidaEmail("scan11@com..br"));
             Assert.IsFalse(ValidateUtils.ValidaEmail("scan11@com.br."));
