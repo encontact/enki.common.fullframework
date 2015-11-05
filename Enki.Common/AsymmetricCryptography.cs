@@ -7,7 +7,7 @@ namespace Enki.Common.Cryptography
     /// <summary>
     /// Permite criptogradia simétrica com uso de chaves Pública/Privada.
     /// </summary>
-    internal class AsymmetricCryptography
+    public class AsymmetricCryptography
     {
         private string _privateKey, _publicKey;
         private Encoding encodingToUse = new UTF8Encoding();
