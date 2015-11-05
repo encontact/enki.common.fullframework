@@ -56,6 +56,7 @@
     <Compile Include="ParallelTaskTest.cs" />
     <Compile Include="StringUtilsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ValidateUtilsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Enki.Common\Enki.Common.csproj">

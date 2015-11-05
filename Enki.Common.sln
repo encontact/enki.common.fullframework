@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Enki.Common", "Test.En
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enki.Common", "Enki.Common\Enki.Common.csproj", "{0D238B23-C10D-45E1-9D3F-865D80B34CAA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enki.CommonTests1", "Enki.CommonTests1\Enki.CommonTests1.csproj", "{F6FF001A-A310-4D56-B3B8-9F5A59181FA3}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,12 +26,6 @@ Global
 		{0D238B23-C10D-45E1-9D3F-865D80B34CAA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0D238B23-C10D-45E1-9D3F-865D80B34CAA}.Teste|Any CPU.ActiveCfg = Teste|Any CPU
 		{0D238B23-C10D-45E1-9D3F-865D80B34CAA}.Teste|Any CPU.Build.0 = Teste|Any CPU
-		{F6FF001A-A310-4D56-B3B8-9F5A59181FA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F6FF001A-A310-4D56-B3B8-9F5A59181FA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F6FF001A-A310-4D56-B3B8-9F5A59181FA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F6FF001A-A310-4D56-B3B8-9F5A59181FA3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F6FF001A-A310-4D56-B3B8-9F5A59181FA3}.Teste|Any CPU.ActiveCfg = Release|Any CPU
-		{F6FF001A-A310-4D56-B3B8-9F5A59181FA3}.Teste|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
