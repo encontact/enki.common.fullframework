@@ -2,7 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Enki.Common.Cryptography
+namespace Enki.Common
 {
     /// <summary>
     /// Permite criptogradia simétrica com uso de chaves Pública/Privada.

@@ -50,6 +50,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="AsymmetricCryptographyTests.cs" />
     <Compile Include="DateUtilsTest.cs" />
     <Compile Include="SingleThreadTest.cs" />
     <Compile Include="RegionalUtils\BrazilianUtilsTest.cs" />
