@@ -18,10 +18,10 @@ namespace Enki.Common.Cryptography
             }
         }
 
-        public AesSymmetricCryptography(string privateKey, string publicKey)
+        public AesSymmetricCryptography(string key, string IV)
         {
-            _key = privateKey;
-            _IV = publicKey;
+            _key = key;
+            _IV = IV;
         }
 
         public string Encrypt(string message)
