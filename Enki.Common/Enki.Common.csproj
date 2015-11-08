@@ -55,7 +55,8 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AsymmetricCryptography.cs" />
+    <Compile Include="AesSymmetricCryptography.cs" />
+    <Compile Include="RsaAsymmetricCryptography.cs" />
     <Compile Include="Bits.cs" />
     <Compile Include="CriptographyUtils.cs" />
     <Compile Include="DateUtils.cs" />

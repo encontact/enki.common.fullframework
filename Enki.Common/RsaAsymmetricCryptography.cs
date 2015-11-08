@@ -2,17 +2,17 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Enki.Common
+namespace Enki.Common.Cryptography
 {
     /// <summary>
     /// Permite criptogradia simétrica com uso de chaves Pública/Privada.
     /// </summary>
-    public class AsymmetricCryptography
+    public class RsaAsymmetricCryptography
     {
         private string _privateKey, _publicKey;
         private Encoding encodingToUse = new UTF8Encoding();
 
-        public AsymmetricCryptography()
+        public RsaAsymmetricCryptography()
         {
             using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider { KeySize = 1024 })
             {
@@ -21,7 +21,7 @@ namespace Enki.Common
             }
         }
 
-        public AsymmetricCryptography(string privateKey, string publicKey)
+        public RsaAsymmetricCryptography(string privateKey, string publicKey)
         {
             _privateKey = privateKey;
             _publicKey = publicKey;
