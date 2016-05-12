@@ -16,12 +16,30 @@ namespace Enki.Common
             }
         }
 
+        public static string Md5Encrypt(byte[] binary)
+        {
+            using (var md5hasher = new MD5CryptoServiceProvider())
+            {
+                var hashedDataBytes = md5hasher.ComputeHash(binary);
+                return ByteArrayToString(hashedDataBytes);
+            }
+        }
+
         public static string Sha1Encrypt(string phrase)
         {
             var encoder = new UTF8Encoding();
             using (var sha1hasher = new SHA1CryptoServiceProvider())
             {
                 var hashedDataBytes = sha1hasher.ComputeHash(encoder.GetBytes(phrase));
+                return ByteArrayToString(hashedDataBytes);
+            }
+        }
+
+        public static string Sha1Encrypt(byte[] binary)
+        {
+            using (var sha1hasher = new SHA1CryptoServiceProvider())
+            {
+                var hashedDataBytes = sha1hasher.ComputeHash(binary);
                 return ByteArrayToString(hashedDataBytes);
             }
         }
@@ -36,6 +54,15 @@ namespace Enki.Common
             }
         }
 
+        public static string Sha256Encrypt(byte[] binary)
+        {
+            using (var sha256hasher = new SHA256Managed())
+            {
+                var hashedDataBytes = sha256hasher.ComputeHash(binary);
+                return ByteArrayToString(hashedDataBytes);
+            }
+        }
+
         public static string Sha384Encrypt(string phrase)
         {
             var encoder = new UTF8Encoding();
@@ -46,12 +73,30 @@ namespace Enki.Common
             }
         }
 
+        public static string Sha384Encrypt(byte[] binary)
+        {
+            using (var sha384hasher = new SHA384Managed())
+            {
+                var hashedDataBytes = sha384hasher.ComputeHash(binary);
+                return ByteArrayToString(hashedDataBytes);
+            }
+        }
+
         public static string Sha512Encrypt(string phrase)
         {
             var encoder = new UTF8Encoding();
             using (var sha512hasher = new SHA512Managed())
             {
                 var hashedDataBytes = sha512hasher.ComputeHash(encoder.GetBytes(phrase));
+                return ByteArrayToString(hashedDataBytes);
+            }
+        }
+
+        public static string Sha512Encrypt(byte[] binary)
+        {
+            using (var sha512hasher = new SHA512Managed())
+            {
+                var hashedDataBytes = sha512hasher.ComputeHash(binary);
                 return ByteArrayToString(hashedDataBytes);
             }
         }
@@ -71,6 +116,12 @@ namespace Enki.Common
             var encData_byte = new byte[data.Length];
             encData_byte = Encoding.UTF8.GetBytes(data);
             var encodedData = Convert.ToBase64String(encData_byte);
+            return encodedData;
+        }
+
+        public static string Base64Encode(byte[] binary)
+        {
+            var encodedData = Convert.ToBase64String(binary);
             return encodedData;
         }
 
