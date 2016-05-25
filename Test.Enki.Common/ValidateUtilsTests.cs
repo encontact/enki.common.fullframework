@@ -27,6 +27,7 @@ namespace Enki.Common.Tests
             Assert.IsTrue(ValidateUtils.ValidaEmail("teste.email@meu-dominio.com.br"));
             Assert.IsTrue(ValidateUtils.ValidaEmail("teste.email@meu-dominio-dois.com.br"));
             Assert.IsTrue(ValidateUtils.ValidaEmail("Meu nome(meunome@teste.com) <meunome@teste.com>"));
+            Assert.IsTrue(ValidateUtils.ValidaEmail("teste.email@meu.dominio-internacional.com"));
 
             // Validações falsas.
             Assert.IsFalse(ValidateUtils.ValidaEmail("nomecomprido@"));
