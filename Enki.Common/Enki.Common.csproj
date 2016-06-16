@@ -74,6 +74,7 @@
     <Compile Include="ThreadSafeQueue.cs" />
     <Compile Include="ValidateUtils.cs" />
     <Compile Include="WebUtils\HttpFunctions.cs" />
+    <Compile Include="WebUtils\JsonReturn.cs" />
     <Compile Include="WebUtils\Parameter.cs" />
     <Compile Include="WebUtils\WebMethodInfo.cs" />
     <Compile Include="WebUtils\WebMethodInfoCollection.cs" />
