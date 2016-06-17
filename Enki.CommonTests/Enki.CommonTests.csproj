@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7E9EB2E5-425B-4D5E-9FA1-0882890398A1}</ProjectGuid>
+    <ProjectGuid>{C140DFEC-FCEF-41D0-883C-E4D1A3EFF267}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Test.Enki.Common</RootNamespace>
-    <AssemblyName>Test.Enki.Common</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <RootNamespace>Enki.CommonTests</RootNamespace>
+    <AssemblyName>Enki.CommonTests</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -16,6 +16,7 @@
     <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
     <IsCodedUITest>False</IsCodedUITest>
     <TestProjectType>UnitTest</TestProjectType>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -50,22 +51,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="AesSymmetricCryptographyTests.cs" />
-    <Compile Include="RsaAsymmetricCryptographyTests.cs" />
-    <Compile Include="DateUtilsTest.cs" />
-    <Compile Include="SingleThreadTest.cs" />
-    <Compile Include="RegionalUtils\BrazilianUtilsTest.cs" />
-    <Compile Include="ParallelTaskTest.cs" />
-    <Compile Include="StringUtilsTest.cs" />
+    <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ValidateUtilsTests.cs" />
-    <Compile Include="WebUtils\HtmlToTextTests.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Enki.Common\Enki.Common.csproj">
-      <Project>{0d238b23-c10d-45e1-9d3f-865d80b34caa}</Project>
-      <Name>Enki.Common</Name>
-    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

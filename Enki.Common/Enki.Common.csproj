@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AesSymmetricCryptography.cs" />
+    <Compile Include="Exceptions\Error.cs" />
     <Compile Include="RsaAsymmetricCryptography.cs" />
     <Compile Include="Bits.cs" />
     <Compile Include="CriptographyUtils.cs" />
@@ -73,8 +74,10 @@
     <Compile Include="Threading.cs" />
     <Compile Include="ThreadSafeQueue.cs" />
     <Compile Include="ValidateUtils.cs" />
+    <Compile Include="WebUtils\HtmlToText.cs" />
     <Compile Include="WebUtils\HttpFunctions.cs" />
     <Compile Include="WebUtils\JsonReturn.cs" />
+    <Compile Include="WebUtils\KeyValueSerializable.cs" />
     <Compile Include="WebUtils\Parameter.cs" />
     <Compile Include="WebUtils\WebMethodInfo.cs" />
     <Compile Include="WebUtils\WebMethodInfoCollection.cs" />
