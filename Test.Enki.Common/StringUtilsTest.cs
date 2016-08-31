@@ -56,7 +56,7 @@ namespace Test.Enki.Common
             Assert.AreEqual("85,13", StringUtils.format(StringUtils.CurrencyFrom("R$ 85.13").ToString(), "###.###.###,##"));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void RemoveAccentsTest()
         {
             Assert.AreEqual("A", StringUtils.RemoveAccents("Á"));
@@ -120,6 +120,62 @@ namespace Test.Enki.Common
 
             Assert.AreEqual("Y", StringUtils.RemoveAccents("Ý"));
             Assert.AreEqual("y", StringUtils.RemoveAccents("ý"));
+        }
+
+        [TestMethod]
+        public void ExtractEmailAddressTest()
+        {
+            // Validações verdadeiras.
+            Assert.AreEqual("nomecomprido@enkilabs.com.br", StringUtils.ExtractEmailAddress("nomecomprido@enkilabs.com.br"));
+            Assert.AreEqual("nomecomprido_cs@hotmail.com", StringUtils.ExtractEmailAddress("nomecomprido_cs@hotmail.com"));
+            Assert.AreEqual("nomecomprido.coelho@hotmail.com", StringUtils.ExtractEmailAddress("nomecomprido.coelho@hotmail.com"));
+            Assert.AreEqual("nomecomprido123@hotmail.com", StringUtils.ExtractEmailAddress("nomecomprido123@hotmail.com"));
+            Assert.AreEqual("123nomecomprido@teste.com", StringUtils.ExtractEmailAddress("123nomecomprido@teste.com"));
+            Assert.AreEqual("relacoesinstitucionais@williamfreire.com.br", StringUtils.ExtractEmailAddress("relacoesinstitucionais@williamfreire.com.br"));
+            Assert.AreEqual("sac@sede.embrapa", StringUtils.ExtractEmailAddress("sac@sede.embrapa"));
+            Assert.AreEqual("nomecomprido@enkilabs.com.br", StringUtils.ExtractEmailAddress("nomecomprido Coelho Sartorelli <nomecomprido@enkilabs.com.br>"));
+            Assert.AreEqual("nomecomprido@enkilabs.com.br", StringUtils.ExtractEmailAddress("nomecomprido Coelho Sartorelli <   nomecomprido@enkilabs.com.br >"));
+            Assert.AreEqual("nomecomprido@enkilabs.software", StringUtils.ExtractEmailAddress("nomecomprido@enkilabs.software"));
+            Assert.AreEqual("nomecomprido@123enkilabs.software", StringUtils.ExtractEmailAddress("nomecomprido@123enkilabs.software"));
+            Assert.AreEqual("nomecomprido@gov.br", StringUtils.ExtractEmailAddress("nomecomprido@gov.br"));
+            Assert.AreEqual("nome.sobrenome@br.ey.com", StringUtils.ExtractEmailAddress("nome.sobrenome@br.ey.com"));
+            Assert.AreEqual("livia.pereira@am.sebrae.com.br", StringUtils.ExtractEmailAddress("livia.pereira@am.sebrae.com.br"));
+            Assert.AreEqual("meunome@teste.com", StringUtils.ExtractEmailAddress("Meu nome(meunome@teste.com) <meunome@teste.com>"));
+
+            // Validações falsas.
+            Assert.AreEqual("", StringUtils.ExtractEmailAddress("nomecomprido@"));
+            Assert.AreEqual("", StringUtils.ExtractEmailAddress("@tagged.com"));
+            Assert.AreEqual("", StringUtils.ExtractEmailAddress("MAILER-DAEMON(MailDeliverySystem"));
+            Assert.AreEqual("", StringUtils.ExtractEmailAddress("nomecomprido@_enkilabs.software"));
+            Assert.AreEqual("", StringUtils.ExtractEmailAddress("scan11@com.br."));
+        }
+
+        [TestMethod]
+        public void ExtractEmailNameTest()
+        {
+            // Validações verdadeiras.
+            Assert.AreEqual("nomecomprido Coelho Sartorelli", StringUtils.ExtractEmailName("nomecomprido Coelho Sartorelli <nomecomprido@enkilabs.com.br>"));
+            Assert.AreEqual("nomecomprido Coelho Sartorelli", StringUtils.ExtractEmailName("nomecomprido Coelho Sartorelli <   nomecomprido@enkilabs.com.br >"));
+            Assert.AreEqual("Meu nome(meunome@teste.com)", StringUtils.ExtractEmailName("Meu nome(meunome@teste.com) <meunome@teste.com>"));
+
+            // Validações falsas.
+            Assert.AreEqual("", StringUtils.ExtractEmailName("nomecomprido@"));
+            Assert.AreEqual("", StringUtils.ExtractEmailName("@tagged.com"));
+            Assert.AreEqual("", StringUtils.ExtractEmailName("MAILER-DAEMON(MailDeliverySystem"));
+            Assert.AreEqual("", StringUtils.ExtractEmailName("nomecomprido@_enkilabs.software"));
+            Assert.AreEqual("", StringUtils.ExtractEmailName("scan11@com.br."));
+            Assert.AreEqual("", StringUtils.ExtractEmailName("nomecomprido@enkilabs.com.br"));
+            Assert.AreEqual("", StringUtils.ExtractEmailName("nomecomprido_cs@hotmail.com"));
+            Assert.AreEqual("", StringUtils.ExtractEmailName("nomecomprido.coelho@hotmail.com"));
+            Assert.AreEqual("", StringUtils.ExtractEmailName("nomecomprido123@hotmail.com"));
+            Assert.AreEqual("", StringUtils.ExtractEmailName("123nomecomprido@teste.com"));
+            Assert.AreEqual("", StringUtils.ExtractEmailName("relacoesinstitucionais@williamfreire.com.br"));
+            Assert.AreEqual("", StringUtils.ExtractEmailName("sac@sede.embrapa"));
+            Assert.AreEqual("", StringUtils.ExtractEmailName("nomecomprido@enkilabs.software"));
+            Assert.AreEqual("", StringUtils.ExtractEmailName("nomecomprido@123enkilabs.software"));
+            Assert.AreEqual("", StringUtils.ExtractEmailName("nomecomprido@gov.br"));
+            Assert.AreEqual("", StringUtils.ExtractEmailName("nome.sobrenome@br.ey.com"));
+            Assert.AreEqual("", StringUtils.ExtractEmailName("livia.pereira@am.sebrae.com.br"));
         }
     }
 }

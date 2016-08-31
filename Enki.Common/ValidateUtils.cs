@@ -29,8 +29,7 @@ namespace Enki.Common
         public static bool ValidaEmail(string inputEmail)
         {
             inputEmail = inputEmail == null ? "" : inputEmail;
-            string strRegex = @"^[\w\+\=\-\.]+@[a-zA-Z0-9]{1}[a-zA-Z0-9\-]*?[a-zA-Z0-9]{1,}(\.{1}[a-zA-Z0-9\-]{2,})+?$|^[^<>]*?<\s*[\w\+\=\-\.]+@[a-zA-Z0-9]{1}[a-zA-Z0-9\-]*?[a-zA-Z0-9]{1,}(\.{1}[a-zA-Z0-9]{2,})+?\s*>$";
-            var re = new Regex(strRegex, RegexOptions.IgnoreCase);
+            var re = new Regex(StringUtils.EmailRegExp, RegexOptions.IgnoreCase);
             return re.IsMatch(inputEmail);
         }
 

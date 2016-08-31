@@ -8,6 +8,8 @@ namespace Enki.Common
 {
     public static class StringUtils
     {
+        public const string EmailRegExp = @"(^[\w\+\=\-\.]+@[a-zA-Z0-9]{1}[a-zA-Z0-9\-]*?[a-zA-Z0-9]{1,}(?:\.{1}[a-zA-Z0-9\-]{2,})+?$)|^([^<>]*?)<(\s*[\w\+\=\-\.]+@[a-zA-Z0-9]{1}[a-zA-Z0-9\-]*?[a-zA-Z0-9]{1,}(?:\.{1}[a-zA-Z0-9]{2,})+?\s*)>$";
+
         /// <summary>
         /// Formata uma string para estrutura de CNPJ
         /// </summary>
@@ -53,7 +55,7 @@ namespace Enki.Common
             // remove caracteres nao numericos
             foreach (char c in valor)
             {
-                if (Char.IsNumber(c))
+                if (char.IsNumber(c))
                     dado.Append(c);
             }
             int indMascara = mascara.Length;
@@ -81,7 +83,7 @@ namespace Enki.Common
             try
             {
                 byte[] encData_byte = new byte[data.Length];
-                encData_byte = System.Text.Encoding.UTF8.GetBytes(data);
+                encData_byte = Encoding.UTF8.GetBytes(data);
                 string encodedData = Convert.ToBase64String(encData_byte);
                 return encodedData;
             }
@@ -100,8 +102,8 @@ namespace Enki.Common
         {
             try
             {
-                System.Text.UTF8Encoding encoder = new System.Text.UTF8Encoding();
-                System.Text.Decoder utf8Decode = encoder.GetDecoder();
+                UTF8Encoding encoder = new UTF8Encoding();
+                Decoder utf8Decode = encoder.GetDecoder();
 
                 byte[] todecode_byte = Convert.FromBase64String(data);
                 int charCount = utf8Decode.GetCharCount(todecode_byte, 0, todecode_byte.Length);
@@ -116,49 +118,42 @@ namespace Enki.Common
             }
         }
 
+        [Obsolete("Utilizar ao invés ExtractEmailAddress()")]
+        public static string getEmailAddressFrom(string stringWithEmail)
+        {
+            return ExtractEmailAddress(stringWithEmail);
+        }
+
         /// <summary>
         /// Recupera o e-mail contido num texto, por exemplo "Reinaldo Coelho Sartorelli <reinaldo@enkiconsultoira.com.br>" retorna "reinaldo@enkiconsultoria.com.br"
         /// </summary>
-        /// <param name="stringWithEmail">Texto a ser processado.</param>
+        /// <param name="text">Texto a ser processado.</param>
         /// <returns>Email encontrado.</returns>
-        public static string getEmailAddressFrom(string stringWithEmail)
+        public static string ExtractEmailAddress(string text)
         {
-            try
-            {
-                string emailTo = stringWithEmail.Trim();
-                string emailRegex = @"(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|""(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*"")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])";
-                string emailAddress = Regex.Match(emailTo.ToLower(), emailRegex).Value;
-                return emailAddress.Trim();
-            }
-            catch { return ""; }
+            string emailTo = text.Trim();
+            var emailGroups = Regex.Match(emailTo.ToLower(), EmailRegExp).Groups;
+            var emailAddress = !string.IsNullOrEmpty(emailGroups[1]?.Value) ? emailGroups[1]?.Value : emailGroups[3]?.Value;
+            return emailAddress.Trim();
+        }
+
+        [Obsolete("Utilizar ao invés ExtractEmailName()")]
+        public static string getEmailNameFrom(string stringWithEmail)
+        {
+            return ExtractEmailName(stringWithEmail);
         }
 
         /// <summary>
         /// Recupera o nome contido num texto de email, por exemplo "Reinaldo Coelho Sartorelli <reinaldo@enkiconsultoira.com.br>" retorna "Reinaldo Coelho Sartorelli"
         /// </summary>
-        /// <param name="stringWithEmail">Texto a ser processado.</param>
+        /// <param name="text">Texto a ser processado.</param>
         /// <returns>Nome encontrado.</returns>
-        public static string getEmailNameFrom(string stringWithEmail)
+        public static string ExtractEmailName(string text)
         {
-            try
-            {
-                string emailTo = stringWithEmail;
-                string emailRegex = @"(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|""(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*"")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])";
-                string emailAddress = Regex.Match(emailTo.ToLower(), emailRegex).Value;
-                string displayName = null;
-
-                try
-                {
-                    displayName = emailTo.Substring(0, emailTo.ToLower().IndexOf(emailAddress) - 1);
-                }
-                catch
-                {
-                    // No display name
-                }
-
-                return displayName.Trim();
-            }
-            catch { return ""; }
+            string emailTo = text.Trim();
+            var emailGroups = Regex.Match(emailTo, EmailRegExp).Groups;
+            var name = emailGroups[2]?.Value ?? "";
+            return name.Trim();
         }
 
         /// <summary>
