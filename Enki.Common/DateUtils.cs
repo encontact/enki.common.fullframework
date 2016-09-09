@@ -4,7 +4,9 @@ namespace Enki.Common
 {
     public class DateUtils
     {
-        private static DateTime _epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        private static DateTime _utcEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        private static DateTime _localEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Local);
+        private static DateTime _unspecifiedEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Unspecified);
 
         /// <summary>
         /// Converte a data atual (UTC/GMT) para UNIX Timestamp
@@ -22,7 +24,7 @@ namespace Enki.Common
         /// <returns>Valor numério representando os segundos transcorridos desde 01/01/1970 até a data informada.</returns>
         public static long GetGMTUnixEpochNow()
         {
-            return Convert.ToInt64((DateTime.UtcNow - _epoch).TotalSeconds);
+            return Convert.ToInt64((DateTime.UtcNow - _utcEpoch).TotalSeconds);
         }
 
         /// <summary>
@@ -31,7 +33,7 @@ namespace Enki.Common
         /// <returns>Valor numério representando os segundos transcorridos desde 01/01/1970 até a data informada.</returns>
         public static long GetLocalUnixEpochNow()
         {
-            return Convert.ToInt64((DateTime.Now - _epoch).TotalSeconds);
+            return Convert.ToInt64((DateTime.Now - _localEpoch).TotalSeconds);
         }
 
         /// <summary>
@@ -41,7 +43,7 @@ namespace Enki.Common
         /// <returns>Data resultante</returns>
         public static DateTime FromUnixEpoch(double milliseconds)
         {
-            return _epoch.AddMilliseconds(milliseconds);
+            return _utcEpoch.AddMilliseconds(milliseconds);
         }
 
         /// <summary>
@@ -49,9 +51,19 @@ namespace Enki.Common
         /// </summary>
         /// <param name="value">Data a ser convertida</param>
         /// <returns>Valor numério representando os segundos transcorridos desde 01/01/1970 até a data informada.</returns>
-        public static long GetUnixEpoch(DateTime value)
+        public static long GetUnixEpoch(DateTime value, DateTimeKind kind)
         {
-            return Convert.ToInt64((value - _epoch).TotalSeconds);
+            switch (kind)
+            {
+                case DateTimeKind.Local:
+                    return Convert.ToInt64((value - _utcEpoch).TotalSeconds);
+                case DateTimeKind.Utc:
+                    return Convert.ToInt64((value - _localEpoch).TotalSeconds);
+                case DateTimeKind.Unspecified:
+                    return Convert.ToInt64((value - _unspecifiedEpoch).TotalSeconds);
+                default:
+                    throw new Exception("Not implemented date kind.");
+            }
         }
 
         public static string GetTotalHours(TimeSpan time)
