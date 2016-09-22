@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Text;
 
 namespace Enki.Common.WebUtils.Tests
 {
@@ -101,5 +102,31 @@ div.WordSection1
             var converter = new HtmlToText(html);
             Assert.AreEqual("Vamos colocar uma imagem supimpa???", converter.GetText());
         }
+        [TestMethod()]
+        [Ignore()]
+        public void MustProcessHtmlWithUnicodeChars()
+        {
+            // TODO: A string criada abaixo não está representando um texto unicode real. Verificar para validar.
+            var html = Encoding.Unicode.GetString(Encoding.Unicode.GetBytes(@"
+            <html xmlns:v=""urn:schemas-microsoft-com:vml"" xmlns:o=""urn:schemas-microsoft-com:office:office"" xmlns:w=""urn:schemas-microsoft-com:office:word"" xmlns:m=""http://schemas.microsoft.com/office/2004/12/omml"" xmlns=""http://www.w3.org/TR/REC-html40"">
+                <head>
+                    <style>
+                        * {behavior:url(#default#VML);}
+                    </style>
+                </head>
+                <body lang=PT-BR link=""#0563C1"" vlink=""#954F72"">
+                    <p class=3DMsoNormal>Esta mensagem foi verificada pelo sistema de antiv\uDCB5s e  acredita-se estar livre de perigo.</p>
+                </body>
+                <script>
+                    function test(){
+                        alert('This is a Test');
+                    }
+                </script>
+            </html>"));
+            var converter = new HtmlToText(html);
+            var result = converter.GetText();
+            Assert.AreEqual("Esta mensagem foi verificada pelo sistema de antiv?s e acredita-se estar livre de perigo. Validado com atenção.", result);
+        }
     }
 }
+

@@ -19,7 +19,10 @@ namespace Test.Enki.Common
         {
             var dateNow = DateTime.UtcNow;
             var epochNow = DateUtils.GetGMTUnixEpochNow();
-            Assert.AreEqual(DateUtils.GetUnixEpoch(dateNow, DateTimeKind.Utc), epochNow);
+            var epochRecovered = DateUtils.GetUnixEpoch(dateNow, DateTimeKind.Utc);
+            var dateRecovered = DateUtils.FromUnixEpochSeconds(epochRecovered);
+            Assert.AreEqual(epochRecovered, epochNow);
+            Assert.AreEqual(dateNow.ToString("dd/MM/yyyy HH:mm:ss"), dateRecovered.ToString("dd/MM/yyyy HH:mm:ss"));
         }
 
         [TestMethod]

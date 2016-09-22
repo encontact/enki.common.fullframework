@@ -41,9 +41,30 @@ namespace Enki.Common
         /// </summary>
         /// <param name="milliseconds">Tempo em milissegundos a serem adicionados ao EPOCH</param>
         /// <returns>Data resultante</returns>
+        [Obsolete("Utilizar FromUnixEpochMilliseconds()")]
         public static DateTime FromUnixEpoch(double milliseconds)
         {
             return _utcEpoch.AddMilliseconds(milliseconds);
+        }
+
+        /// <summary>
+        /// Recupera a Data GMT atualizada com o tempo informado.
+        /// </summary>
+        /// <param name="milliseconds">Tempo em milissegundos a serem adicionados ao EPOCH</param>
+        /// <returns>Data resultante</returns>
+        public static DateTime FromUnixEpochMilliseconds(double milliseconds)
+        {
+            return _utcEpoch.AddMilliseconds(milliseconds);
+        }
+
+        /// <summary>
+        /// Recupera a Data GMT atualizada com o tempo informado.
+        /// </summary>
+        /// <param name="seconds">Tempo em segundos a serem adicionados ao EPOCH</param>
+        /// <returns>Data resultante</returns>
+        public static DateTime FromUnixEpochSeconds(double seconds)
+        {
+            return _utcEpoch.AddSeconds(seconds);
         }
 
         /// <summary>
