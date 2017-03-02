@@ -22,7 +22,7 @@ namespace Test.Enki.Common
             var epochRecovered = DateUtils.GetUnixEpoch(dateNow, DateTimeKind.Utc);
             var dateRecovered = DateUtils.FromUnixEpochSeconds(epochRecovered);
             Assert.AreEqual(epochRecovered, epochNow);
-            Assert.AreEqual(dateNow.ToString("dd/MM/yyyy HH:mm:ss"), dateRecovered.ToString("dd/MM/yyyy HH:mm:ss"));
+            Assert.AreEqual(dateNow.ToString("dd/MM/yyyy HH:mm"), dateRecovered.ToString("dd/MM/yyyy HH:mm"));
         }
 
         [TestMethod]
