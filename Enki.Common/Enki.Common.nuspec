@@ -10,8 +10,8 @@
     <projectUrl>https://bitbucket.org/encontact/enki.common</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>First version of library.</releaseNotes>
-    <copyright>Copyright 2014</copyright>
+    <releaseNotes>Common Enki lib.</releaseNotes>
+    <copyright>Copyright 2017</copyright>
     <tags>enkilabs utilities</tags>
   </metadata>
 </package>
