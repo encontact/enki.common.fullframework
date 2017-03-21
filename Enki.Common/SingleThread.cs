@@ -168,6 +168,7 @@ namespace Enki.Common
         /// <returns></returns>
         private static bool Exists(string functionName)
         {
+            if (_nameThreadStartDate == null || _nameThreadStartDate.Count == 0) return false;
             return _nameThreadStartDate.Exists(n => n.Item1 == functionName);
         }
 
