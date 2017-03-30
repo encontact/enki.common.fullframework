@@ -3,3 +3,5 @@ bin/
 packages/
 TestResults/
 *.suo
+*.un~
+*~
