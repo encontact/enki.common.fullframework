@@ -34,6 +34,8 @@ namespace Enki.Common.Tests
             Assert.IsTrue(ValidateUtils.ValidaEmail("´nomecomprido Coelho Sartorelli´ <   nomecomprido@enkilabs.com.br >"));
             Assert.IsTrue(ValidateUtils.ValidaEmail("CLIENT_UNDERLINE_&E@Client.com"));
             Assert.IsTrue(ValidateUtils.ValidaEmail("Client underline and & <CLIENT_UNDERLINE_&E@Client.com>"));
+            Assert.IsTrue(ValidateUtils.ValidaEmail("clientemail@i.client.com"));
+            Assert.IsTrue(ValidateUtils.ValidaEmail("Client underline and & <clientemail@i.client.com>"));
 
             // Validações falsas.
             Assert.IsFalse(ValidateUtils.ValidaEmail("nomecomprido@"));
