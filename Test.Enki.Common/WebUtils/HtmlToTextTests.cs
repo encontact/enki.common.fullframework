@@ -133,8 +133,8 @@ div.WordSection1
 <meta http-equiv=""content-type"" content=""text/html; charset=utf-8""></head>
 <body dir=""auto"">
 <div>Boa tarde,</div><div><br></div>
-<div>Gostaria de saber valores em caso de alteração do voo de volta para quinta feira final do dia.</div>
-<div>Voo direto para sdu ou galeão.</div>
+<div>Gostaria de saber valores em caso de alteracao do voo de volta para quinta feira final do dia.</div>
+<div>Voo direto para sdu ou galeao.</div>
 <div>Favor sinalizar voo a partir das 18h com menor valor</div>
 <div><br></div>
 <div>Obrigada<br><br><div>Sent from my iPhone</div></div><div><br>";
@@ -142,8 +142,8 @@ div.WordSection1
             var result = converter.GetText();
             Assert.AreEqual(@"Boa tarde,  
  
- Gostaria de saber valores em caso de alteração do voo de volta para quinta feira final do dia. 
- Voo direto para sdu ou galeão. 
+ Gostaria de saber valores em caso de alteracao do voo de volta para quinta feira final do dia. 
+ Voo direto para sdu ou galeao. 
  Favor sinalizar voo a partir das 18h com menor valor 
  
  
