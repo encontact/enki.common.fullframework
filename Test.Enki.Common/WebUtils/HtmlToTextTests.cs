@@ -103,7 +103,6 @@ div.WordSection1
             Assert.AreEqual("Vamos colocar uma imagem supimpa???", converter.GetText());
         }
         [TestMethod()]
-        [Ignore()]
         public void MustProcessHtmlWithUnicodeChars()
         {
             // TODO: A string criada abaixo não está representando um texto unicode real. Verificar para validar.
@@ -115,7 +114,7 @@ div.WordSection1
                     </style>
                 </head>
                 <body lang=PT-BR link=""#0563C1"" vlink=""#954F72"">
-                    <p class=3DMsoNormal>Esta mensagem foi verificada pelo sistema de antiv\uDCB5s e  acredita-se estar livre de perigo.</p>
+                    <p class=3DMsoNormal>Esta mensagem foi verificada pelo sistema de antivírus e  acredita-se estar livre de perigo.</p>
                 </body>
                 <script>
                     function test(){
@@ -125,7 +124,32 @@ div.WordSection1
             </html>"));
             var converter = new HtmlToText(html);
             var result = converter.GetText();
-            Assert.AreEqual("Esta mensagem foi verificada pelo sistema de antiv?s e acredita-se estar livre de perigo. Validado com atenção.", result);
+            Assert.AreEqual("Esta mensagem foi verificada pelo sistema de antivírus e  acredita-se estar livre de perigo.", result);
+        }
+        [TestMethod()]
+        public void MustProcessHtmlWithMultilineString()
+        {
+            var html = @"<html><head>
+<meta http-equiv=""content-type"" content=""text/html; charset=utf-8""></head>
+<body dir=""auto"">
+<div>Boa tarde,</div><div><br></div>
+<div>Gostaria de saber valores em caso de alteração do voo de volta para quinta feira final do dia.</div>
+<div>Voo direto para sdu ou galeão.</div>
+<div>Favor sinalizar voo a partir das 18h com menor valor</div>
+<div><br></div>
+<div>Obrigada<br><br><div>Sent from my iPhone</div></div><div><br>";
+            var converter = new HtmlToText(html);
+            var result = converter.GetText();
+            Assert.AreEqual(@"Boa tarde,  
+ 
+ Gostaria de saber valores em caso de alteração do voo de volta para quinta feira final do dia. 
+ Voo direto para sdu ou galeão. 
+ Favor sinalizar voo a partir das 18h com menor valor 
+ 
+ 
+ Obrigada
+
+ Sent from my iPhone", result);
         }
     }
 }

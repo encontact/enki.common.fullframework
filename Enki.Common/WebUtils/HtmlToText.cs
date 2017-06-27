@@ -19,11 +19,7 @@ namespace Enki.Common.WebUtils
         /// <returns>Texto puro em UTF-8 do Html.</returns>
         public string GetText()
         {
-            var removedStyleAndScript = Regex.Replace(OriginalHtml, "(<style.+?</style>)|(<script.+?</script>)", "", RegexOptions.IgnoreCase | RegexOptions.Singleline);
-            var removedTags = Regex.Replace(removedStyleAndScript, "<[^>]+>", " ", RegexOptions.IgnoreCase);
-            var decodedHtml = HttpUtility.HtmlDecode(removedTags);
-            var final = EncodeString(decodedHtml, Encoding.UTF8);
-            return final.Trim();
+            return GetText(Encoding.UTF8);
         }
 
         /// <summary>
@@ -33,7 +29,10 @@ namespace Enki.Common.WebUtils
         /// <returns></returns>
         public string GetText(Encoding encode)
         {
-            var removedStyleAndScript = Regex.Replace(OriginalHtml, "(<style.+?</style>)|(<script.+?</script>)", "", RegexOptions.IgnoreCase | RegexOptions.Singleline);
+            var lineBreakReplaced = Regex.Replace(OriginalHtml, "<br>|<br/>", "\r\n", RegexOptions.IgnoreCase | RegexOptions.Multiline);
+            var paragraphReplaced = Regex.Replace(lineBreakReplaced, "<p>|</p>", "\r\n", RegexOptions.IgnoreCase | RegexOptions.Multiline);
+            var divReplaced = Regex.Replace(paragraphReplaced, "<div>|</div>", "\r\n", RegexOptions.IgnoreCase | RegexOptions.Multiline);
+            var removedStyleAndScript = Regex.Replace(paragraphReplaced, "(<style.+?</style>)|(<script.+?</script>)", "", RegexOptions.IgnoreCase | RegexOptions.Singleline);
             var removedTags = Regex.Replace(removedStyleAndScript, "<[^>]+>", " ", RegexOptions.IgnoreCase);
             var decodedHtml = HttpUtility.HtmlDecode(removedTags);
             var final = EncodeString(decodedHtml, encode);
