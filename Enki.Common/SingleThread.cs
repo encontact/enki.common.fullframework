@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Web.Hosting;
 
@@ -17,6 +18,8 @@ namespace Enki.Common
         /// <returns>Thread criada</returns>
         public static Thread Create(string functionName, ThreadStart work)
         {
+            if (string.IsNullOrWhiteSpace(functionName)) return null;
+
             Thread ret = null;
             lock (_nameThreadStartDate)
             {
@@ -24,6 +27,8 @@ namespace Enki.Common
                 ret = CreateThread(functionName, work);
                 ret.Name = functionName;
                 _nameThreadStartDate.Add(new Tuple<string, Thread, DateTime>(functionName, ret, DateTime.Now));
+                // Remove qualquer thread que contenha uma tupla inválida.
+                _nameThreadStartDate.RemoveAll(m => m == null);
             }
             if (ret != null) ret.Start();
             return ret;
@@ -39,7 +44,7 @@ namespace Enki.Common
             try
             {
                 if (!Exists(functionName)) return null;
-                var tuple = _nameThreadStartDate.Find(n => n.Item1 == functionName);
+                var tuple = _nameThreadStartDate.Find(n => n != null && n.Item1 == functionName);
                 return tuple.Item2;
             }
             catch
@@ -54,7 +59,8 @@ namespace Enki.Common
         /// <returns>Lista encontrada.</returns>
         public static List<string> GetNames()
         {
-            return new List<string>(_nameThreadStartDate.ConvertAll(m => m.Item1));
+            if (_nameThreadStartDate == null || _nameThreadStartDate.Count == 0) return new List<string>();
+            return new List<string>(_nameThreadStartDate.Where(m => m != null && !string.IsNullOrWhiteSpace(m.Item1)).ToList().ConvertAll(m => m.Item1));
         }
 
         /// <summary>
@@ -63,6 +69,7 @@ namespace Enki.Common
         /// <returns>Quantidade de threads registradas</returns>
         public static int ThreadsCount()
         {
+            if (_nameThreadStartDate == null) return 0;
             return _nameThreadStartDate.Count;
         }
 
@@ -77,6 +84,7 @@ namespace Enki.Common
             {
                 if (!Exists(functionName)) return;
                 var thisThread = Get(functionName);
+                if (thisThread == null) return;
                 RemoveItem(functionName);
                 thisThread.Abort();
             }
@@ -93,6 +101,7 @@ namespace Enki.Common
             {
                 if (!Exists(functionName)) return;
                 var thisThread = Get(functionName);
+                if (thisThread == null) return;
                 RemoveItem(functionName);
                 thisThread.Interrupt();
             }
@@ -108,7 +117,9 @@ namespace Enki.Common
             try
             {
                 if (!Exists(functionName)) return false;
-                return Get(functionName).IsAlive;
+                var thisThread = Get(functionName);
+                if (thisThread == null) return false;
+                return thisThread.IsAlive;
             }
             catch
             {
@@ -126,7 +137,7 @@ namespace Enki.Common
             try
             {
                 if (!Exists(functionName)) return null;
-                var tuple = _nameThreadStartDate.Find(m => m.Item1 == functionName);
+                var tuple = _nameThreadStartDate.Find(m => m != null && m.Item1 == functionName);
                 return tuple.Item3;
             }
             catch
@@ -168,8 +179,17 @@ namespace Enki.Common
         /// <returns></returns>
         private static bool Exists(string functionName)
         {
-            if (_nameThreadStartDate == null || _nameThreadStartDate.Count == 0) return false;
-            return _nameThreadStartDate.Exists(n => n.Item1 == functionName);
+            try
+            {
+                if (_nameThreadStartDate == null || _nameThreadStartDate.Count == 0) return false;
+                return _nameThreadStartDate.Exists(n => n != null && n.Item1 == functionName);
+            }
+            catch (Exception)
+            {
+                // Se houve exceção ao validar existência, considera que a lista de threads corrompeu, desta forma zera estrutura de threads.
+                _nameThreadStartDate = new List<Tuple<string, Thread, DateTime>>();
+                return false;
+            }
         }
 
         /// <summary>
@@ -178,7 +198,7 @@ namespace Enki.Common
         /// <param name="functionName"></param>
         private static void RemoveItem(string functionName)
         {
-            _nameThreadStartDate.RemoveAll(n => n.Item1 == functionName);
+            _nameThreadStartDate.RemoveAll(n => n != null && n.Item1 == functionName);
         }
     }
 

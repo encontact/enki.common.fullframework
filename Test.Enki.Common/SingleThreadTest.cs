@@ -129,5 +129,28 @@ namespace Test.Enki.Common
             Assert.IsTrue(SingleThread.GetStartDate(firstThreadName).Value.CompareTo(DateTime.Now.AddSeconds(-5)) > 0);
             SingleThread.ForceStop(firstThreadName);
         }
+
+        [TestMethod]
+        public void TestThreadOverhead()
+        {
+            var threadName = "NameThread";
+            for (var i = 0; i < 1000; i++)
+            {
+                SingleThread.Create(string.Concat(threadName, i), delegate
+                {
+                    Thread.Sleep(5000);
+                    return;
+                });
+            }
+            for (var i = 1000; i > 0; i--)
+            {
+                SingleThread.Create(string.Concat(threadName, i), delegate
+                {
+                    Thread.Sleep(5000);
+                    return;
+                });
+            }
+            Assert.IsTrue(SingleThread.GetNames().Count > 0);
+        }
     }
 }
