@@ -77,9 +77,9 @@ namespace Enki.Common
             switch (kind)
             {
                 case DateTimeKind.Local:
-                    return Convert.ToInt64((value - _utcEpoch).TotalSeconds);
-                case DateTimeKind.Utc:
                     return Convert.ToInt64((value - _localEpoch).TotalSeconds);
+                case DateTimeKind.Utc:
+                    return Convert.ToInt64((value - _utcEpoch).TotalSeconds);
                 case DateTimeKind.Unspecified:
                     return Convert.ToInt64((value - _unspecifiedEpoch).TotalSeconds);
                 default:

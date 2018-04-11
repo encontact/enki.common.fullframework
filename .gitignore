@@ -2,6 +2,7 @@ obj/
 bin/
 packages/
 TestResults/
+.vs/
 *.suo
 *.un~
 *~
