@@ -51,6 +51,7 @@ namespace Enki.Common.Tests
             Assert.IsFalse(ValidateUtils.ValidaEmail("scan11@.com.br"));
             Assert.IsFalse(ValidateUtils.ValidaEmail("scan11@com..br"));
             Assert.IsFalse(ValidateUtils.ValidaEmail("scan11@com.br."));
+            Assert.IsFalse(ValidateUtils.ValidaEmail("ericalidiane@asconsystems..com.br"));
         }
     }
 }

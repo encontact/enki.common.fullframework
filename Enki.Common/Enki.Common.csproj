@@ -1,98 +1,27 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0D238B23-C10D-45E1-9D3F-865D80B34CAA}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Enki.Common</RootNamespace>
+    <Description>Enkilabs common library for support common features.</Description>
+    <Copyright>Enkilabs 2018</Copyright>
+    <TargetFramework>net461</TargetFramework>
+    <DebugType>portable</DebugType>
     <AssemblyName>Enki.Common</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
+    <PackageId>Enki.Common</PackageId>
+    <PackageVersion>1.1.0</PackageVersion>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Teste|AnyCPU'">
-    <OutputPath>bin\Teste\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="EPPlus, Version=4.1.0.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
-      <HintPath>..\packages\EPPlus.4.1.0\lib\net40\EPPlus.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
-    </Reference>
+    <PackageReference Include="EPPlus" Version="4.5.2.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.XML" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="AesSymmetricCryptography.cs" />
-    <Compile Include="Exceptions\Error.cs" />
-    <Compile Include="RsaAsymmetricCryptography.cs" />
-    <Compile Include="Bits.cs" />
-    <Compile Include="CriptographyUtils.cs" />
-    <Compile Include="DateUtils.cs" />
-    <Compile Include="ExcelUtils.cs" />
-    <Compile Include="HttpUtils.cs" />
-    <Compile Include="IPAddressRange.cs" />
-    <Compile Include="LimitedQueue.cs" />
-    <Compile Include="ParallelTask.cs" />
-    <Compile Include="Period.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RegionalUtils\BrazilianUtils.cs" />
-    <Compile Include="SingleThread.cs" />
-    <Compile Include="StreamUtils.cs" />
-    <Compile Include="StringUtils.cs" />
-    <Compile Include="Threading.cs" />
-    <Compile Include="ThreadSafeQueue.cs" />
-    <Compile Include="ValidateUtils.cs" />
-    <Compile Include="WebUtils\HtmlToText.cs" />
-    <Compile Include="WebUtils\HttpFunctions.cs" />
-    <Compile Include="WebUtils\JsonReturn.cs" />
-    <Compile Include="WebUtils\KeyValueSerializable.cs" />
-    <Compile Include="WebUtils\Parameter.cs" />
-    <Compile Include="WebUtils\WebMethodInfo.cs" />
-    <Compile Include="WebUtils\WebMethodInfoCollection.cs" />
-    <Compile Include="WebUtils\WebServiceInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="Enki.Common.nuspec" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>
