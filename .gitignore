@@ -6,3 +6,6 @@ TestResults/
 *.suo
 *.un~
 *~
+
+# Cake Build
+tools/
