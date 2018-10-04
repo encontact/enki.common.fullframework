@@ -1,57 +1,54 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 
 namespace Enki.Common.Tests
 {
-    [TestClass()]
     public class ValidateUtilsTests
     {
-        [TestMethod()]
-        public void ValidaEmailTest()
-        {
-            // Validações verdadeiras.
-            Assert.IsTrue(ValidateUtils.ValidaEmail("nomecomprido@enkilabs.com.br"));
-            Assert.IsTrue(ValidateUtils.ValidaEmail("nomecomprido_cs@hotmail.com"));
-            Assert.IsTrue(ValidateUtils.ValidaEmail("nomecomprido.coelho@hotmail.com"));
-            Assert.IsTrue(ValidateUtils.ValidaEmail("nomecomprido123@hotmail.com"));
-            Assert.IsTrue(ValidateUtils.ValidaEmail("123nomecomprido@teste.com"));
-            Assert.IsTrue(ValidateUtils.ValidaEmail("nomecomprido@eNkIlAbS.cOm.Br"));
-            Assert.IsTrue(ValidateUtils.ValidaEmail("relacoesinstitucionais@williamfreire.com.br"));
-            Assert.IsTrue(ValidateUtils.ValidaEmail("sac@sede.embrapa"));
-            Assert.IsTrue(ValidateUtils.ValidaEmail("nomecomprido Coelho Sartorelli <nomecomprido@enkilabs.com.br>"));
-            Assert.IsTrue(ValidateUtils.ValidaEmail("nomecomprido Coelho Sartorelli <   nomecomprido@enkilabs.com.br >"));
-            Assert.IsTrue(ValidateUtils.ValidaEmail("nomecomprido@enkilabs.software"));
-            Assert.IsTrue(ValidateUtils.ValidaEmail("nomecomprido@123enkilabs.software"));
-            Assert.IsTrue(ValidateUtils.ValidaEmail("nomecomprido@gov.br"));
-            Assert.IsTrue(ValidateUtils.ValidaEmail("nome.sobrenome@br.ey.com"));
-            Assert.IsTrue(ValidateUtils.ValidaEmail("livia.pereira@am.sebrae.com.br"));
-            Assert.IsTrue(ValidateUtils.ValidaEmail("teste.email@meu-dominio.com.br"));
-            Assert.IsTrue(ValidateUtils.ValidaEmail("teste.email@meu-dominio-dois.com.br"));
-            Assert.IsTrue(ValidateUtils.ValidaEmail("Meu nome(meunome@teste.com) <meunome@teste.com>"));
-            Assert.IsTrue(ValidateUtils.ValidaEmail("teste.email@meu.dominio-internacional.com"));
-            Assert.IsTrue(ValidateUtils.ValidaEmail("teste2.@enkilabs.com.br"));
-            Assert.IsTrue(ValidateUtils.ValidaEmail("'nomecomprido Coelho Sartorelli' <   nomecomprido@enkilabs.com.br >"));
-            Assert.IsTrue(ValidateUtils.ValidaEmail("`nomecomprido Coelho Sartorelli` <   nomecomprido@enkilabs.com.br >"));
-            Assert.IsTrue(ValidateUtils.ValidaEmail("´nomecomprido Coelho Sartorelli´ <   nomecomprido@enkilabs.com.br >"));
-            Assert.IsTrue(ValidateUtils.ValidaEmail("CLIENT_UNDERLINE_&E@Client.com"));
-            Assert.IsTrue(ValidateUtils.ValidaEmail("Client underline and & <CLIENT_UNDERLINE_&E@Client.com>"));
-            Assert.IsTrue(ValidateUtils.ValidaEmail("clientemail@i.client.com"));
-            Assert.IsTrue(ValidateUtils.ValidaEmail("Client underline and & <clientemail@i.client.com>"));
+        [Theory]
+        [InlineData("nomecomprido@enkilabs.com.br")]
+        [InlineData("nomecomprido_cs@hotmail.com")]
+        [InlineData("nomecomprido.coelho@hotmail.com")]
+        [InlineData("nomecomprido123@hotmail.com")]
+        [InlineData("123nomecomprido@teste.com")]
+        [InlineData("nomecomprido@eNkIlAbS.cOm.Br")]
+        [InlineData("relacoesinstitucionais@williamfreire.com.br")]
+        [InlineData("sac@sede.embrapa")]
+        [InlineData("nomecomprido Coelho Sartorelli <nomecomprido@enkilabs.com.br>")]
+        [InlineData("nomecomprido Coelho Sartorelli <   nomecomprido@enkilabs.com.br >")]
+        [InlineData("nomecomprido@enkilabs.software")]
+        [InlineData("nomecomprido@123enkilabs.software")]
+        [InlineData("nomecomprido@gov.br")]
+        [InlineData("nome.sobrenome@br.ey.com")]
+        [InlineData("livia.pereira@am.sebrae.com.br")]
+        [InlineData("teste.email@meu-dominio.com.br")]
+        [InlineData("teste.email@meu-dominio-dois.com.br")]
+        [InlineData("Meu nome(meunome@teste.com) <meunome@teste.com>")]
+        [InlineData("teste.email@meu.dominio-internacional.com")]
+        [InlineData("'nomecomprido Coelho Sartorelli' <   nomecomprido@enkilabs.com.br >")]
+        [InlineData("`nomecomprido Coelho Sartorelli` <   nomecomprido@enkilabs.com.br >")]
+        [InlineData("´nomecomprido Coelho Sartorelli´ <   nomecomprido@enkilabs.com.br >")]
+        [InlineData("CLIENT_UNDERLINE_&E@Client.com")]
+        [InlineData("Client underline and & <CLIENT_UNDERLINE_&E@Client.com>")]
+        [InlineData("clientemail@i.client.com")]
+        [InlineData("Client underline and & <clientemail@i.client.com>")]
+        public void TestValidEmailCases(string validEmail) => Assert.True(ValidateUtils.ValidaEmail(validEmail));
 
-            // Validações falsas.
-            Assert.IsFalse(ValidateUtils.ValidaEmail("nomecomprido@"));
-            Assert.IsFalse(ValidateUtils.ValidaEmail("@tagged.com"));
-            Assert.IsFalse(ValidateUtils.ValidaEmail("@taggedmail.com"));
-            Assert.IsFalse(ValidateUtils.ValidaEmail("MAILER-DAEMON(MailDeliverySystem"));
-            Assert.IsFalse(ValidateUtils.ValidaEmail("Nutrição"));
-            Assert.IsFalse(ValidateUtils.ValidaEmail("@neomerkato.com.br"));
-            Assert.IsFalse(ValidateUtils.ValidaEmail("roy"));
-            Assert.IsFalse(ValidateUtils.ValidaEmail("nomecomprido@_enkilabs.software"));
-            Assert.IsFalse(ValidateUtils.ValidaEmail("nomecomprido@-enkilabs.software"));
-            Assert.IsFalse(ValidateUtils.ValidaEmail("nomecomprido@enkilabs-.software"));
-            Assert.IsFalse(ValidateUtils.ValidaEmail("scan11@.com.br"));
-            Assert.IsFalse(ValidateUtils.ValidaEmail("scan11@com..br"));
-            Assert.IsFalse(ValidateUtils.ValidaEmail("scan11@com.br."));
-            Assert.IsFalse(ValidateUtils.ValidaEmail("invalidemail@domain..com.br"));
-        }
+        [Theory]
+        [InlineData("nomecomprido@")]
+        [InlineData("@tagged.com")]
+        [InlineData("@taggedmail.com")]
+        [InlineData("MAILER-DAEMON(MailDeliverySystem")]
+        [InlineData("Nutrição")]
+        [InlineData("@neomerkato.com.br")]
+        [InlineData("roy")]
+        [InlineData("nomecomprido@_enkilabs.software")]
+        [InlineData("nomecomprido@-enkilabs.software")]
+        [InlineData("nomecomprido@enkilabs-.software")]
+        [InlineData("scan11@.com.br")]
+        [InlineData("scan11@com..br")]
+        [InlineData("scan11@com.br.")]
+        [InlineData("invalidemail@domain..com.br")]
+        [InlineData("teste2.@enkilabs.com.br")]
+        public void TestInvalidEmailCases(string invalidEmail) => Assert.False(ValidateUtils.ValidaEmail(invalidEmail));
     }
 }

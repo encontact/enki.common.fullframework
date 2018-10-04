@@ -28,9 +28,16 @@ namespace Enki.Common
         /// <returns></returns>
         public static bool ValidaEmail(string inputEmail)
         {
-            inputEmail = inputEmail == null ? "" : inputEmail;
-            var re = new Regex(StringUtils.EmailRegExp, RegexOptions.IgnoreCase);
-            return re.IsMatch(inputEmail);
+            try
+            {
+                inputEmail = inputEmail == null ? "" : inputEmail;
+                var re = new Regex(StringUtils.EmailRegExp, RegexOptions.IgnoreCase);
+                return re.IsMatch(inputEmail);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         /// <summary>
